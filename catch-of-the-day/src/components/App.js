@@ -4,25 +4,31 @@ import Order from "./Order";
 import Inventory from "./Inventory";
 import sampleFishes from "../sample-fishes";
 import Fish from "./Fish";
-import base from "../base"; 
+import base from "../base";
 class App extends React.Component{
 
   state = {
      fishes:{},
      order:{}
   };
-  componentDidMount(){
-    const { params } = this.props.match; 
-    this.ref = base.syncState(`${params.storeId}/fishes`,{
-   context: this,
-   state: "fishes"
-  }); 
-}
+
+componentDidMount() {
+    const { params } = this.props.match;
+    this.ref = base.syncState(`${params.storeId}/fishes`, {
+      context: this,
+      state: "fishes"
+    });
+  };
+
+  componentWillUnmount() {
+    base.removeBinding(this.ref);
+  }
+
   addFish = fish => {
     // 1. taking a copy of existing state
       const fishes = {...this.state.fishes};
     // 2. add our new fish to fishes variable
-    fishes[`fish${Date.now()}`]= fish;
+    fishes[`Fish${Date.now()}`]= fish;
     // 3. set a new fish obj to state
     this.setState({ fishes });
   };
