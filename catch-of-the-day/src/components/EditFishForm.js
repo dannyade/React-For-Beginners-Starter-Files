@@ -1,8 +1,15 @@
 import React from "react";
 
 class EditFishForm extends React.Component{
-     handleChange = (event) =>{
-         console.log(event.currentTarget);
+     handleChange = event =>{
+         console.log(event.currentTarget.value);
+// update the fish
+// 1. take the copy of the current fish     
+const updatedFish = {
+    ...this.props.fish, 
+    [event.currentTarget.name]: event.currentTarget.value
+};
+    this.props.updateFish(this.props.index , updatedFish);
      };
     render(){
       return (
